@@ -47,6 +47,7 @@
     <Compile Include="Contracts\IBookService.cs" />
     <Compile Include="DTOs\BookAddDTO.cs" />
     <Compile Include="DTOs\BookDisplayDTO.cs" />
+    <Compile Include="DTOs\BookEditDTO.cs" />
     <Compile Include="Infrastructure\ActionState.cs" />
     <Compile Include="Infrastructure\DataServiceMessage.cs" />
     <Compile Include="Infrastructure\ExceptionMessageBuilder.cs" />

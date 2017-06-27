@@ -17,23 +17,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.EnryptedId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.EnryptedId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.EnryptedId })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                <a href="#" onclick="editBook(@item.EnryptedId)" class="btn btn-primary">Edit</a>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.EnryptedId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EnryptedId })*@
+            </td>
+        </tr>
+    }
 </table>
+
+<div id="modalContainer"></div>
+@Scripts.Render("~/bundles/editBook")

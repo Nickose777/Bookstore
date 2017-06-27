@@ -12,6 +12,10 @@ namespace Bookstore.Services.Contracts
     {
         ServiceMessage Add(BookAddDTO bookAddDTO);
 
+        ServiceMessage Edit(BookEditDTO bookEditDTO);
+
+        DataServiceMessage<BookEditDTO> Get(string encryptedId);
+
         DataServiceMessage<IEnumerable<BookDisplayDTO>> GetAll();
     }
 }

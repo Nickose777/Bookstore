@@ -20,7 +20,7 @@ namespace Bookstore.Controllers
             this.service = service;
         }
 
-        public ActionResult Index()
+        public ActionResult List()
         {
             ActionResult result = null;
 
@@ -78,6 +78,46 @@ namespace Bookstore.Controllers
             }
 
             return result;
+        }
+
+        [HttpGet]
+        public ActionResult Get(string id)
+        {
+            DataServiceMessage<BookEditDTO> serviceMessage = service.Get(id);
+
+            ActionResult result = null;
+
+            switch (serviceMessage.ActionState)
+            {
+                case ActionState.Empty:
+                    result = new EmptyResult();
+                    break;
+                case ActionState.Success:
+                    BookEditBindingModel book = new BookEditBindingModel
+                    {
+                        EncryptedId = serviceMessage.Data.EncryptedId,
+                        Title = serviceMessage.Data.Title,
+                        Price = serviceMessage.Data.Price,
+                        Author = serviceMessage.Data.Author
+                    };
+                    result = PartialView("Edit", book);
+                    break;
+                case ActionState.NotFound:
+                    result = new HttpNotFoundResult(serviceMessage.Message);
+                    break;
+                case ActionState.Exception:
+                    result = new HttpStatusCodeResult(HttpStatusCode.BadRequest, serviceMessage.Message);
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        public ActionResult Edit(BookEditBindingModel book)
+        {
+            return List();
         }
     }
 }
