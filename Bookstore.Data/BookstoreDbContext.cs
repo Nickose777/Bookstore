@@ -20,6 +20,8 @@ namespace Bookstore.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            Database.SetInitializer<BookstoreDbContext>(new DropCreateDatabaseIfModelChanges<BookstoreDbContext>());
+
             modelBuilder.Configurations.Add(new BookConfiguration());
         }
     }

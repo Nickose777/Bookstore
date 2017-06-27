@@ -39,6 +39,8 @@ namespace Bookstore.Services.Providers
                 })
                 .OrderBy(book => book.Title)
                 .ToList();
+
+                actionState = data.Count() != 0 ? ActionState.Success : ActionState.NotFound;
             }
             catch (Exception ex)
             {
