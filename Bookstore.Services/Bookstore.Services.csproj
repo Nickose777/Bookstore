@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IBookService.cs" />
+    <Compile Include="DTOs\BookAddDTO.cs" />
     <Compile Include="DTOs\BookDisplayDTO.cs" />
     <Compile Include="Infrastructure\ActionState.cs" />
     <Compile Include="Infrastructure\DataServiceMessage.cs" />

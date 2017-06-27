@@ -1,4 +1,5 @@
-﻿using Bookstore.Services.Contracts;
+﻿using Bookstore.Models;
+using Bookstore.Services.Contracts;
 using Bookstore.Services.DTOs;
 using Bookstore.Services.Infrastructure;
 using System;
@@ -10,11 +11,11 @@ using System.Web.Mvc;
 
 namespace Bookstore.Controllers
 {
-    public class HomeController : Controller
+    public class BookController : Controller
     {
         private readonly IBookService service;
 
-        public HomeController(IBookService service)
+        public BookController(IBookService service)
         {
             this.service = service;
         }
@@ -43,18 +44,42 @@ namespace Bookstore.Controllers
             return result;
         }
 
-        public ActionResult About()
+        public ActionResult New()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return View("Create");
         }
 
-        public ActionResult Contact()
+        public ActionResult Create(BookAddBindingModel book)
         {
-            ViewBag.Message = "Your contact page.";
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
-            return View();
+            BookAddDTO bookDTO = new BookAddDTO
+            {
+                Title = book.Title,
+                Price = book.Price,
+                Author = book.Author
+            };
+            ServiceMessage serviceMessage = service.Add(bookDTO);
+
+            ActionResult result = null;
+
+            switch (serviceMessage.ActionState)
+            {
+                case ActionState.Empty:
+                    result = new EmptyResult();
+                    break;
+                case ActionState.Success:
+                    result = RedirectToAction("Index", "Book");
+                    break;
+                case ActionState.Exception:
+                    result = new HttpStatusCodeResult(HttpStatusCode.BadRequest, serviceMessage.Message);
+                    break;
+            }
+
+            return result;
         }
     }
 }

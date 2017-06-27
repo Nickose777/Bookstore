@@ -10,6 +10,8 @@ namespace Bookstore.Services.Contracts
 {
     public interface IBookService : IDisposable
     {
+        ServiceMessage Add(BookAddDTO bookAddDTO);
+
         DataServiceMessage<IEnumerable<BookDisplayDTO>> GetAll();
     }
 }
