@@ -28,13 +28,11 @@ namespace Bookstore.Controllers
             switch (serviceMessage.ActionState)
             {
                 case ActionState.Empty:
+                case ActionState.NotFound:
                     result = new EmptyResult();
                     break;
                 case ActionState.Success:
-                    result = View(serviceMessage.Data);
-                    break;
-                case ActionState.NotFound:
-                    result = HttpNotFound();
+                    result = View("List", serviceMessage.Data);
                     break;
                 case ActionState.Exception:
                     result = new HttpStatusCodeResult(HttpStatusCode.BadRequest, serviceMessage.Message);
