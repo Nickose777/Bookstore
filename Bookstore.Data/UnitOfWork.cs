@@ -4,13 +4,13 @@ using Bookstore.Data.Repositories;
 
 namespace Bookstore.Data
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly BookstoreDbContext context;
 
-        public UnitOfWork(BookstoreDbContext context)
+        public UnitOfWork()
         {
-            this.context = context;
+            this.context = new BookstoreDbContext();
         }
 
         public IBookRepository Books

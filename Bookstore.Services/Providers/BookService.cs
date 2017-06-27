@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore.Services.Providers
 {
-    class BookService : IBookService
+    public class BookService : IBookService
     {
         private readonly IUnitOfWork unitOfWork;
 

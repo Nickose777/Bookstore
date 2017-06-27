@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookstore.Services.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,13 @@ namespace Bookstore.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IBookService service;
+
+        public HomeController(IBookService service)
+        {
+            this.service = service;
+        }
+
         public ActionResult Index()
         {
             return View();
