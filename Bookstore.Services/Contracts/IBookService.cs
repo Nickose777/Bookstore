@@ -14,6 +14,8 @@ namespace Bookstore.Services.Contracts
 
         ServiceMessage Edit(BookEditDTO bookEditDTO);
 
+        ServiceMessage Delete(string encryptedId);
+
         DataServiceMessage<BookEditDTO> Get(string encryptedId);
 
         DataServiceMessage<IEnumerable<BookDisplayDTO>> GetAll();

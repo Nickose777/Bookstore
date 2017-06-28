@@ -91,6 +91,39 @@ namespace Bookstore.Services.Providers
             return new ServiceMessage(actionState, message);
         }
 
+        public ServiceMessage Delete(string encryptedId)
+        {
+            ActionState actionState = ActionState.Empty;
+            string message = String.Empty;
+
+            try
+            {
+                int id = Convert.ToInt32(encryptedId);
+                BookEntity bookEntity = unitOfWork.Books.Get(id);
+
+                if (bookEntity != null)
+                {
+                    unitOfWork.Books.Remove(bookEntity);
+                    unitOfWork.Commit();
+
+                    actionState = ActionState.Success;
+                    message = "Deleted book";
+                }
+                else
+                {
+                    actionState = ActionState.NotFound;
+                    message = "Book was not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                actionState = ActionState.Exception;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new ServiceMessage(actionState, message);
+        }
+
         public DataServiceMessage<BookEditDTO> Get(string encryptedId)
         {
             ActionState actionState = ActionState.Empty;

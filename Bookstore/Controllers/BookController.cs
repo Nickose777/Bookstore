@@ -28,9 +28,9 @@ namespace Bookstore.Controllers
             switch (serviceMessage.ActionState)
             {
                 case ActionState.Empty:
-                case ActionState.NotFound:
                     result = new EmptyResult();
                     break;
+                case ActionState.NotFound:
                 case ActionState.Success:
                     result = View("List", serviceMessage.Data);
                     break;
@@ -70,7 +70,7 @@ namespace Bookstore.Controllers
                     result = new EmptyResult();
                     break;
                 case ActionState.Success:
-                    result = RedirectToAction("Index", "Book");
+                    result = RedirectToAction("List", "Book");
                     break;
                 case ActionState.Exception:
                     result = new HttpStatusCodeResult(HttpStatusCode.BadRequest, serviceMessage.Message);
@@ -146,6 +146,32 @@ namespace Bookstore.Controllers
                     default:
                         break;
                 }
+            }
+
+            return result;
+        }
+
+        public ActionResult Delete(string id)
+        {
+            ActionResult result = null;
+
+            ServiceMessage serviceMessage = service.Delete(id);
+
+            switch (serviceMessage.ActionState)
+            {
+                case ActionState.Empty:
+                    result = new EmptyResult();
+                    break;
+                case ActionState.Success:
+                    TempData["Message"] = serviceMessage.Message;
+                    result = RedirectToAction("List", "Book");
+                    break;
+                case ActionState.NotFound:
+                case ActionState.Exception:
+                    result = Content(serviceMessage.Message);
+                    break;
+                default:
+                    break;
             }
 
             return result;

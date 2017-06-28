@@ -31,8 +31,7 @@
             </td>
             <td>
                 <a href="#" onclick="editBook(@item.EnryptedId)" class="btn btn-primary">Edit</a>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.EnryptedId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.EnryptedId })*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.EnryptedId })
             </td>
         </tr>
     }
@@ -56,3 +55,13 @@
     </div>
 </div>
 @Scripts.Render("~/bundles/editBook")
+@{
+    var message = TempData["Message"] ?? string.Empty;
+}
+
+<script type="text/javascript" async>
+    var message = '@message';
+    if (message) {
+        setTimeout(function () { alert(message); }, 1);
+    }
+</script>
