@@ -147,6 +147,10 @@ namespace Bookstore.Controllers
                         break;
                 }
             }
+            else
+            {
+                result = PartialView();
+            }
 
             return result;
         }
