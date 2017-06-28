@@ -117,7 +117,38 @@ namespace Bookstore.Controllers
 
         public ActionResult Edit(BookEditBindingModel book)
         {
-            return List();
+            ActionResult result = null;
+
+            if (ModelState.IsValid)
+            {
+                BookEditDTO bookEditDTO = new BookEditDTO
+                {
+                    EncryptedId = book.EncryptedId,
+                    Author = book.Author,
+                    Title = book.Title,
+                    Price = book.Price
+                };
+
+                ServiceMessage serviceMessage = service.Edit(bookEditDTO);
+
+                switch (serviceMessage.ActionState)
+                {
+                    case ActionState.Empty:
+                        result = new EmptyResult();
+                        break;
+                    case ActionState.Success:
+                        result = PartialView(book);
+                        break;
+                    case ActionState.NotFound:
+                    case ActionState.Exception:
+                        result = Content(serviceMessage.Message);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return result;
         }
     }
 }

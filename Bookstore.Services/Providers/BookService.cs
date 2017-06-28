@@ -70,7 +70,6 @@ namespace Bookstore.Services.Providers
                         bookEntity.Price = bookEditDTO.Price;
                         bookEntity.Author = bookEditDTO.Author;
 
-                        unitOfWork.Books.Add(bookEntity);
                         unitOfWork.Commit();
 
                         actionState = ActionState.Success;
